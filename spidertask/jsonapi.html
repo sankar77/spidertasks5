@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<link href="Project/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="Project/js/bootstrap.min.js.css" rel="stylesheet" type="text/css">
+<style>
+body{
+	text-align: center;
+	background: white;
+  font-family: sans-serif;
+  font-weight: 100;
+}
+
+h1{
+  color: red;
+  font-weight: 100;
+  font-size: 40px;
+  margin: 40px 0px 20px;
+}
+
+
+#jsap{
+	font-family: sans-serif;
+	color: white;
+	display: inline-block;
+	font-weight: 100;
+	text-align: center;
+	font-size: 20px;
+}
+
+
+#jsap > span{
+	padding: 10px;
+	border-radius: 3px;
+	background: black;
+	display: inline-block;
+}
+
+
+#jsap > div{
+	padding: 15px;
+	border-radius: 8px;
+	background: black;
+	display: inline-block;
+}
+
+.jp{
+	padding-top: 5px;
+	font-size: 30px;
+	color:red;
+}
+</style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+<div style="text-align:center" class="container-fluid">
+
+<div class="jumbotron" style="background-color:black;">
+   
+ <h1 style="color:red;">BOX OFFICE</h1>
+</div>
+</div>
+<ul class="nav navbar-nav">
+</ul>
+</div>
+</nav>  
+<center>
+<form  action="jsonapi.html" method="get">
+MOVIE NAME:<input type="text" name="mov" id="mv"><br/><br/>
+<!--input type="submit" name="submit" value="VIEW"-->
+<!--input type="button" onclick="location.href='http://google.com';" value="Go to Google" /-->
+<input type="button" id="search" value="SEARCH" /><br/><br/><br/><br/><br/><br/><br/>
+</form>
+<div id="jsap">
+  <div>
+  
+  <div class="jp">Title</div>
+  <span class="title"></span>
+    
+    </div>
+  <br/><br/><br/>
+  <div>
+    <div class="jp">Plot</div>
+    <span class="plot"></span>
+    
+  </div>
+  <br/><br/><br/>
+  <div>
+    <div class="jp">Rating</div>
+    <span class="rating"></span>
+    
+  </div>
+  <br/><br/><br/>
+  <div>
+   <div class="jp">Type</div>
+    <span class="type"></span>
+    
+  </div>
+  <br/><br/><br/>
+ <div>
+  <div class="jp">Genre</div>
+    <span class="genre"></span>
+    
+  </div>
+  <br/><br/><br/>
+  <div>
+  <div class="jp">Actors</div>
+    <span class="actors"></span>
+    
+  </div>
+<br/><br/><br/>
+<div>
+<div class="jp">Poster</div>
+    <span class="poster"></span>
+    <img id="tempimg">
+  </div>
+  
+  
+</div>
+</center>
+<script>
+//alert("hi");
+var ser=document.getElementById("search");
+var query=document.getElementById("mv");
+ser.onclick=function(){
+//alert("hello");
+ if(query.value!=""){
+ //alert("me");
+    var xhttp=new XMLHttpRequest();
+	xhttp.onreadystatechange=function(){
+	   if(xhttp.readyState==4 && xhttp.status==200){
+	   //alert("game");
+	     //alert(xhttp.status);
+		 var json=xhttp.responseText;
+		 var jsonObj=JSON.parse(json);
+		 if(jsonObj.Response=="True"){
+             //var im=document.createElement("img");
+             //sim.src="tirupatipic1.jpg";
+             //document.poster.appendChild(im);
+             var im=document.getElementById("tempimg");
+             im.style.display='';
+             //var i=document.getElementById("timg");
+             //i.style.display='';
+		     var jsa=document.getElementById("jsap");
+			 var tl = jsa.querySelector('.title');
+             var pl = jsa.querySelector('.plot');
+             var rt = jsa.querySelector('.rating');
+             var tp = jsa.querySelector('.type');
+			 var gn = jsa.querySelector('.genre');
+			 var ac = jsa.querySelector('.actors');
+             var po = jsa.querySelector('.poster');
+             //document.po.appendChild(im);
+             //var bd = document.getElementById("jap");
+			 /*document.getElementById("title").innerHTML=jsonObj.Title;
+			 document.getElementById("plot").innerHTML=jsonObj.Plot;
+			 document.getElementById("rating").innerHTML=jsonObj.imdbRating;
+			 document.getElementById("type").innerHTML=jsonObj.Type;
+			 document.getElementById("genre").innerHTML=jsonObj.Genre;
+			 document.getElementById("error").innerHTML="";
+			 document.getElementById("poster").src=jsonObj.Poster;*/
+			 tl.innerHTML=jsonObj.Title;
+			 pl.innerHTML=jsonObj.Plot;
+			 rt.innerHTML=jsonObj.imdbRating;
+			 tp.innerHTML=jsonObj.Type;
+			 gn.innerHTML=jsonObj.Genre;
+			 ac.innerHTML=jsonObj.Actors;
+             im.src=jsonObj.Poster;
+             //i.src=jsonObj.Poster;
+             //document.body.style.backgroundImage="url('jsonObj.Poster')";
+             //document.body.appendChild(jsonObj.Poster);
+			 //alert(jsonObj.Poster);
+             //bd.src=jsonObj.Poster;
+			 //var ur=jsonObj.Poster;
+			 //alert(ur);
+			 //alert(body.font-weight);
+		 }
+        else
+           alert("please enter a valid movie name");
+		 }
+	   };
+	   var base_url="http://www.omdbapi.com/?r=json&t=";
+	   xhttp.open("GET",base_url+query.value,true);
+	   xhttp.send();
+	   //xhttp.open("GET",ur,true);
+	   //xhttp.send();
+	 }
+}
+  </script>
+
+</body>
+</html>
